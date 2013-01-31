@@ -8,7 +8,7 @@
 					"/opt/local/lib/libgd.dylib",
 					"/opt/local/lib/libpuzzle.dylib"
 				],
-			},
+			}
 		}
 	]
 }
