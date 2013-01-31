@@ -1,4 +1,4 @@
-var puzzle = require('./build/Release/puzzle');
+var puzzle = require('../build/Release/puzzle');
 
 
 var P = new puzzle.PuzzleContextWrapper();

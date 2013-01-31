@@ -8,4 +8,4 @@ System Dependencies
 Build and Test
 --------------
 
-node-gyp clean configure build && node test.js
+node-gyp clean configure build && node test/test.js
