@@ -1,1 +1,0 @@
-cmd_Release/puzzle.node := ./gyp-mac-tool flock ./Release/linker.lock c++ -shared -Wl,-search_paths_first -mmacosx-version-min=10.5 -arch x86_64 -L./Release -install_name @rpath/puzzle.node  -o Release/puzzle.node Release/obj.target/puzzle/puzzle.o -L/opt/local/lib -lssl -lcrypto -undefined dynamic_lookup /opt/local/lib/libgd.dylib /opt/local/lib/libpuzzle.dylib
