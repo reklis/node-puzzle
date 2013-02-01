@@ -1,5 +1,8 @@
 #include <stddef.h>
+
+extern "C" {
 #include <puzzle.h>
+}
 
 #include <node.h>
 #include <v8.h>
