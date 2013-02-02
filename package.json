@@ -1,0 +1,33 @@
+{
+  "name": "puzzle",
+  "version": "0.0.1",
+  "author": "Steven Fusco <github@stevenfusco.com>",
+  "description": "c++ wrapper for libpuzzle",
+  "contributors": [ 
+    {
+      "name": "Steven Fusco (node module)",
+      "email": "github@stevenfusco.com"
+    },
+    {
+      "name" : "Frank Denis (original author of libpuzzle)"
+    }
+  ],
+  "scripts": {
+    "test": "node test/test.js"
+  },
+  "main": "./puzzle.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/reklis/node-puzzle.git"
+  },
+  "keywords": [
+    "image",
+    "comparison",
+    "libpuzzle",
+    "libgd"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=0.6"
+  }
+}
