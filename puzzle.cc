@@ -96,7 +96,6 @@ Handle<Value> PuzzleContextWrapper::Compare(const Arguments& args) {
 	Local<v8::String> file2 = args[1]->ToString();
 	bool fix_for_texts = args[2]->IsUndefined() ? true : args[2]->BooleanValue(); // default to ON
 
-	// TODO: check return codes
 	String::AsciiValue f1_ascii(file1);
 	String::AsciiValue f2_ascii(file2);
 	const int S_OK = 0;
@@ -104,18 +103,17 @@ Handle<Value> PuzzleContextWrapper::Compare(const Arguments& args) {
 
 	int vec1_result = puzzle_fill_cvec_from_file(&context, &cvec1, *f1_ascii);
 	if (S_OK != vec1_result) {
-		cerr << "error loading file 1: " << vec1_result << endl;
+		ThrowException(Exception::TypeError(String::New("error loading file 1")));
 	} else {
 		int vec2_result = puzzle_fill_cvec_from_file(&context, &cvec2, *f2_ascii);
 		if (S_OK != vec2_result) {
-			cerr << "error loading file 2: " << vec2_result << endl;
+			ThrowException(Exception::TypeError(String::New("error loading file 2")));
 		} else {
 			distance = puzzle_vector_normalized_distance(&context, &cvec1, &cvec2, fix_for_texts ? 1 : 0);
 			puzzle_free_cvec(&context, &cvec2);
 		}
 		puzzle_free_cvec(&context, &cvec1);
 	}
-
 
 	return scope.Close(Number::New(distance));
 }
