@@ -8,6 +8,9 @@ extern "C" {
 #include <v8.h>
 using namespace v8;
 
+#include <iostream>
+using namespace std;
+
 class PuzzleContextWrapper : public node::ObjectWrap {
  public:
 	static void Init(v8::Handle<v8::Object> target);
@@ -79,12 +82,12 @@ Handle<Value> PuzzleContextWrapper::Compare(const Arguments& args) {
 		return scope.Close(Undefined());
 	}
 
-	if (!args[0]->IsStringObject()) {
+	if (!args[0]->IsString()) {
 		ThrowException(Exception::TypeError(String::New("file1 must be a string path to a file")));
 		return scope.Close(Undefined());
 	}
 
-	if (!args[1]->IsStringObject()) {
+	if (!args[1]->IsString()) {
 		ThrowException(Exception::TypeError(String::New("file2 must be a string path to a file")));
 		return scope.Close(Undefined());
 	}
@@ -96,13 +99,23 @@ Handle<Value> PuzzleContextWrapper::Compare(const Arguments& args) {
 	// TODO: check return codes
 	String::AsciiValue f1_ascii(file1);
 	String::AsciiValue f2_ascii(file2);
-	puzzle_fill_cvec_from_file(&context, &cvec1, *f1_ascii);
-	puzzle_fill_cvec_from_file(&context, &cvec2, *f2_ascii);
+	const int S_OK = 0;
+	double distance = -1;
 
-	double distance = puzzle_vector_normalized_distance(&context, &cvec1, &cvec2, fix_for_texts ? 1 : 0);
+	int vec1_result = puzzle_fill_cvec_from_file(&context, &cvec1, *f1_ascii);
+	if (S_OK != vec1_result) {
+		cerr << "error loading file 1: " << vec1_result << endl;
+	} else {
+		int vec2_result = puzzle_fill_cvec_from_file(&context, &cvec2, *f2_ascii);
+		if (S_OK != vec2_result) {
+			cerr << "error loading file 2: " << vec2_result << endl;
+		} else {
+			distance = puzzle_vector_normalized_distance(&context, &cvec1, &cvec2, fix_for_texts ? 1 : 0);
+			puzzle_free_cvec(&context, &cvec2);
+		}
+		puzzle_free_cvec(&context, &cvec1);
+	}
 
-	puzzle_free_cvec(&context, &cvec1);
-	puzzle_free_cvec(&context, &cvec2);
 
 	return scope.Close(Number::New(distance));
 }
