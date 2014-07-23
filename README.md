@@ -27,3 +27,7 @@ More
 ----
 
 This is very raw.  It exposes exactly one method, there is a lot more to do.  Contributions welcome.
+
+---
+
+[![gittip](http://img.shields.io/gittip/reklis.svg)](https://www.gittip.com/reklis/)
